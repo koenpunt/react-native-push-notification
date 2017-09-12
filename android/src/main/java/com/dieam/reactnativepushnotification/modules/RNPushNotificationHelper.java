@@ -136,9 +136,11 @@ public class RNPushNotificationHelper {
                 return;
             }
 
-            if (bundle.getString("message") == null) {
+            String message = bundle.getString("message") || bundle.getString("msg");
+
+            if (message == null) {
                 // this happens when a 'data' notification is received - we do not synthesize a local notification in this case
-                Log.d(LOG_TAG, "Cannot send to notification centre because there is no 'message' field in: " + bundle);
+                Log.d(LOG_TAG, "Cannot send to notification centre because there is no 'message' or 'msg' field in: " + bundle);
                 return;
             }
 
@@ -169,7 +171,7 @@ public class RNPushNotificationHelper {
                 notification.setGroup(group);
             }
 
-            notification.setContentText(bundle.getString("message"));
+            notification.setContentText(message);
 
             String largeIcon = bundle.getString("largeIcon");
 
